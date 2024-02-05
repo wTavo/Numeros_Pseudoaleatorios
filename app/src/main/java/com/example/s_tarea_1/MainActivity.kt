@@ -23,9 +23,8 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
-
-        val opciones = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50")
+        val opciones = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20","21",
+            "22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50")
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -74,22 +73,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //
     fun digitosMedios(cadena: String, seed: String): String {
-        val longitud = cadena.length
+        val longitudOperacion = cadena.length
         val longitudSeed = seed.length
 
         val cadenaOficial: String
         val corteInicio: Int
         val corteFin: Int
 
-        if (longitud % 2 == 0) {
-            cadenaOficial = cadena.padStart(longitud + 1, '0')
+        if (longitudOperacion % 2 == 0) {
+            cadenaOficial = cadena.padStart(longitudOperacion + 1, '0')
             corteInicio = (cadenaOficial.length - longitudSeed) / 2
             corteFin = corteInicio + longitudSeed
         } else {
             cadenaOficial = cadena
-            corteInicio = (longitud - longitudSeed) / 2
+            corteInicio = (longitudOperacion - longitudSeed) / 2
             corteFin = corteInicio + longitudSeed
         }
 
