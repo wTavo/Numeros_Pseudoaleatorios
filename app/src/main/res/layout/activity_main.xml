@@ -34,9 +34,9 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="Números pseudoaleatorios"
+        android:text="Calculadora de Cuadrados Medios"
         android:textAlignment="center"
         android:textColor="#511298"
         android:textColorHint="#816D6D"
