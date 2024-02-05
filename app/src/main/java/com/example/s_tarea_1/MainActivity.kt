@@ -29,11 +29,11 @@ class MainActivity : AppCompatActivity() {
                     val operation = arregloCadenas[i].toLong() * arregloCadenas[i].toLong()
                     val digit = operation.toString().length.toString()
                     if(digit.toInt() % 2 == 0){
-                        val digitMedium = digitosMedios(operation.toString())
+                        val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
                         binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
                         arregloCadenas[i+1] = digitMedium
                     }else{
-                        val digitMedium = digitosMedios(operation.toString())
+                        val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
                         binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
                         arregloCadenas[i+1] = digitMedium
                     }
@@ -48,19 +48,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun digitosMedios(cadena: String):String{
+    fun digitosMedios(cadena: String, seed: String):String{
         val longitud = cadena.length
+        val longitudSeed = seed.length
 
         if(longitud % 2 == 0){
-            val corteInicio = (longitud - 4) / 2
-            val corteFin = corteInicio + 4
+            val corteInicio = (longitud - longitudSeed) / 2
+            val corteFin = corteInicio + longitudSeed
 
             return cadena.substring(corteInicio,corteFin)
         }else{
             val cadenaOficial = cadena.padStart(longitud + 1, '0')
             val longitudOficial = cadenaOficial.length
-            val corteInicio = (longitudOficial - 4) / 2
-            val corteFin = corteInicio + 4
+            val corteInicio = (longitudOficial - longitudSeed) / 2
+            val corteFin = corteInicio + longitudSeed
             return cadenaOficial.substring(corteInicio,corteFin)
         }
     }
