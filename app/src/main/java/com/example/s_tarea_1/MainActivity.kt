@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //
     fun digitosMedios(cadena: String, seed: String):String{
         val longitud = cadena.length
         val longitudSeed = seed.length
