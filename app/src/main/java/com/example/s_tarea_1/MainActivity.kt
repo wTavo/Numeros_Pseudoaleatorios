@@ -3,6 +3,7 @@ package com.example.s_tarea_1
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.s_tarea_1.databinding.ActivityMainBinding
@@ -53,16 +54,42 @@ class MainActivity : AppCompatActivity() {
         val longitudSeed = seed.length
 
         if(longitud % 2 == 0){
-            val corteInicio = (longitud - longitudSeed) / 2
-            val corteFin = corteInicio + longitudSeed
+            if(longitudSeed % 2 != 0){
+                val cadenaOficial = cadena.padStart(longitud + 1, '0')
+                val longitudOficial = cadenaOficial.length
+                val corteInicio = (longitudOficial - longitudSeed) / 2
+                Log.d("corteInicio", "$corteInicio")
+                val corteFin = corteInicio + longitudSeed
+                Log.d("corteFin", "$corteFin")
 
-            return cadena.substring(corteInicio,corteFin)
+                Log.d("cadena", "$cadenaOficial")
+                return cadenaOficial.substring(corteInicio,corteFin)
+            }else{
+                val corteInicio = (longitud - longitudSeed) / 2
+                val corteFin = corteInicio + longitudSeed
+
+                return cadena.substring(corteInicio,corteFin)
+            }
         }else{
-            val cadenaOficial = cadena.padStart(longitud + 1, '0')
-            val longitudOficial = cadenaOficial.length
-            val corteInicio = (longitudOficial - longitudSeed) / 2
-            val corteFin = corteInicio + longitudSeed
-            return cadenaOficial.substring(corteInicio,corteFin)
+            if(longitudSeed % 2 != 0 ){
+                val corteInicio = (longitud - longitudSeed) / 2
+                Log.d("corteInicio", "$corteInicio")
+                val corteFin = corteInicio + longitudSeed
+                Log.d("corteFin", "$corteFin")
+
+                Log.d("cadena", "$cadena")
+                return cadena.substring(corteInicio,corteFin)
+            }else{
+                val cadenaOficial = cadena.padStart(longitud + 1, '0')
+                val longitudOficial = cadenaOficial.length
+                val corteInicio = (longitudOficial - longitudSeed) / 2
+                Log.d("corteInicio", "$corteInicio")
+                val corteFin = corteInicio + longitudSeed
+                Log.d("corteFin", "$corteFin")
+
+                Log.d("cadena", "$cadenaOficial")
+                return cadenaOficial.substring(corteInicio,corteFin)
+            }
         }
     }
 }
