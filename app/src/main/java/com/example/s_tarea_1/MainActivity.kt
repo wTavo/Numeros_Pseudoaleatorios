@@ -111,6 +111,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //
+
     fun isOnlyZeros(text: String): Boolean {
 
         val sum = text.sumBy { it.digitToInt() }
