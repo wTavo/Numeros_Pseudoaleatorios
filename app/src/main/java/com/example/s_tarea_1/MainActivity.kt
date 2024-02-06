@@ -43,54 +43,78 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnCalcular.setOnClickListener{
-            binding.tvMostrar.text = ""
-            val seed = binding.edtNum.text.toString().toLong()
-            if(seed.toString().length > 3){
-                val arregloCadenas = Array<String>(51) { "" }
-                arregloCadenas[0] = seed.toString()
+            val seed = binding.edtNum.text.toString()
+            if(seed.isNotEmpty()){
+                binding.tvMostrar.text = ""
+                val suma = seed + seed
+                if(suma.toInt() != 0){
+                    if(seed.length > 3){
+                        val arregloCadenas = Array<String>(51) { "" }
+                        arregloCadenas[0] = seed
 
-                for (i in 0..positionSeleccionada){
-                    val operation = arregloCadenas[i].toLong() * arregloCadenas[i].toLong()
-                    Log.d("operation", "$operation")
-                    val digit = operation.toString().length.toString()
-                    if(digit.toInt() % 2 == 0){
-                        val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
-                        binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
-                        arregloCadenas[i+1] = digitMedium
+                        for (i in 0..positionSeleccionada){
+                            val operation = arregloCadenas[i].toLong() * arregloCadenas[i].toLong()
+                            Log.d("operation", "$operation")
+                            val digit = operation.toString().length.toString()
+                            if(digit.toInt() % 2 == 0){
+                                val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
+                                binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
+                                arregloCadenas[i+1] = digitMedium
+                            }else{
+                                val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
+                                binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
+                                arregloCadenas[i+1] = digitMedium
+                            }
+
+                            if (isOnlyZeros(arregloCadenas[i+1])) {
+                                break
+                            }
+                        }
                     }else{
-                        val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
-                        binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
-                        arregloCadenas[i+1] = digitMedium
+                        Toast.makeText(this, "El número debe ser mayor de 3 digitos", Toast.LENGTH_SHORT).show()
                     }
-                }
-            }else{
-                Toast.makeText(this, "El número debe ser mayor de 3 digitos", Toast.LENGTH_SHORT).show()
-            }
 
-            //Ocultar teclado
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+                    //Ocultar teclado
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+                }
+            }
         }
     }
 
     fun digitosMedios(cadena: String, seed: String): String {
-        val longitudOperacion = cadena.length
+
+        val longitudCadena = cadena.length
         val longitudSeed = seed.length
 
-        val cadenaOficial: String
-        val corteInicio: Int
-        val corteFin: Int
+        var cadenaTransformada = cadena
 
-        if (longitudOperacion % 2 == 0) {
-            cadenaOficial = cadena.padStart(longitudOperacion + 1, '0')
-            corteInicio = (cadenaOficial.length - longitudSeed) / 2
-            corteFin = corteInicio + longitudSeed
-        } else {
-            cadenaOficial = cadena
-            corteInicio = (longitudOperacion - longitudSeed) / 2
-            corteFin = corteInicio + longitudSeed
+        if (longitudSeed % 2 == 0) {
+            // Seed par, cadena resultado debe ser par
+            if (longitudCadena % 2 != 0) {
+                // Cadena impar, le agrego 0
+                cadenaTransformada = "0$cadena"
+            }
+        }
+        else {
+            // Seed impar, cadena resultado debe ser impar
+            if (longitudCadena % 2 == 0){
+                // Cadena par, le agrego 0
+                cadenaTransformada = "0$cadena"
+            }
         }
 
-        return cadenaOficial.substring(corteInicio, corteFin)
+        val corteInicio = (cadenaTransformada.length - longitudSeed) / 2
+        val corteFin = corteInicio + longitudSeed
+
+        return cadenaTransformada.substring(corteInicio, corteFin)
+
+    }
+
+    fun isOnlyZeros(text: String): Boolean {
+
+        val sum = text.sumBy { it.digitToInt() }
+
+        return sum == 0
     }
 }
