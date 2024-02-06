@@ -46,38 +46,35 @@ class MainActivity : AppCompatActivity() {
             val seed = binding.edtNum.text.toString()
             if(seed.isNotEmpty()){
                 binding.tvMostrar.text = ""
-                val suma = seed + seed
-                if(suma.toInt() != 0){
-                    if(seed.length > 3){
-                        val arregloCadenas = Array<String>(51) { "" }
-                        arregloCadenas[0] = seed
+                if(seed.length > 3){
+                    val arregloCadenas = Array<String>(51) { "" }
+                    arregloCadenas[0] = seed
 
-                        for (i in 0..positionSeleccionada){
-                            val operation = arregloCadenas[i].toLong() * arregloCadenas[i].toLong()
-                            Log.d("operation", "$operation")
-                            val digit = operation.toString().length.toString()
-                            if(digit.toInt() % 2 == 0){
-                                val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
-                                binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
-                                arregloCadenas[i+1] = digitMedium
-                            }else{
-                                val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
-                                binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
-                                arregloCadenas[i+1] = digitMedium
-                            }
-
-                            if (isOnlyZeros(arregloCadenas[i+1])) {
-                                break
-                            }
+                    for (i in 0..positionSeleccionada){
+                        val operation = arregloCadenas[i].toLong() * arregloCadenas[i].toLong()
+                        Log.d("operation", "$operation")
+                        val digit = operation.toString().length.toString()
+                        if(digit.toInt() % 2 == 0){
+                            val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
+                            binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
+                            arregloCadenas[i+1] = digitMedium
+                        }else{
+                            val digitMedium = digitosMedios(operation.toString(),arregloCadenas[i])
+                            binding.tvMostrar.append("Y${i} = (${arregloCadenas[i]})²  X${i+1} = ${digitMedium}  r${i+1} = 0.${digitMedium}\n")
+                            arregloCadenas[i+1] = digitMedium
                         }
-                    }else{
-                        Toast.makeText(this, "El número debe ser mayor de 3 digitos", Toast.LENGTH_SHORT).show()
-                    }
 
-                    //Ocultar teclado
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+                        if (isOnlyZeros(arregloCadenas[i+1])) {
+                            break
+                        }
+                    }
+                }else{
+                    Toast.makeText(this, "El número debe ser mayor de 3 digitos", Toast.LENGTH_SHORT).show()
                 }
+
+                //Ocultar teclado
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
             }
         }
     }
@@ -114,8 +111,16 @@ class MainActivity : AppCompatActivity() {
     //
 
     fun isOnlyZeros(text: String): Boolean {
-
-        val sum = text.sumBy { it.digitToInt() }
+        val sum = text.sumBy {
+            if (it.isDigit()) {
+                it.digitToInt()
+            } else {
+                // Handle the case when it's not a digit (e.g., '-').
+                // You might want to decide what to do in this case.
+                // For now, just return 0.
+                0
+            }
+        }
 
         return sum == 0
     }
