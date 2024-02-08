@@ -115,9 +115,6 @@ class MainActivity : AppCompatActivity() {
             if (it.isDigit()) {
                 it.digitToInt()
             } else {
-                // Handle the case when it's not a digit (e.g., '-').
-                // You might want to decide what to do in this case.
-                // For now, just return 0.
                 0
             }
         }
