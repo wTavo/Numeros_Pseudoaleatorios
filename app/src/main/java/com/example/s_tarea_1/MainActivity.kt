@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity() {
                     arregloCadenas[0] = seed
 
                     for (i in 0..positionSeleccionada){
+                        if (isOnlyZeros(arregloCadenas[i])) {
+                            Toast.makeText(this, "Valor no validos", Toast.LENGTH_SHORT).show()
+                            break
+                        }
                         val operation = arregloCadenas[i].toLong() * arregloCadenas[i].toLong()
                         Log.d("operation", "$operation")
                         val digit = operation.toString().length.toString()
@@ -65,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         if (isOnlyZeros(arregloCadenas[i+1])) {
+                            Toast.makeText(this, "Valor no validos", Toast.LENGTH_SHORT).show()
                             break
                         }
                     }
@@ -111,13 +116,7 @@ class MainActivity : AppCompatActivity() {
     //
 
     fun isOnlyZeros(text: String): Boolean {
-        val sum = text.sumBy {
-            if (it.isDigit()) {
-                it.digitToInt()
-            } else {
-                0
-            }
-        }
+        val sum = text.toInt() * text.toInt()
 
         return sum == 0
     }
