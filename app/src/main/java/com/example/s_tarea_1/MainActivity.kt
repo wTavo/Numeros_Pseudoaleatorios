@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
                     for (i in 0..positionSeleccionada){
                         if (isOnlyZeros(arregloCadenas[i])) {
-                            Toast.makeText(this, "Valor no validos", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Se encontró valor no válido", Toast.LENGTH_SHORT).show()
                             break
                         }
                         val operation = arregloCadenas[i].toLong() * arregloCadenas[i].toLong()
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         if (isOnlyZeros(arregloCadenas[i+1])) {
-                            Toast.makeText(this, "Valor no validos", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Se encontró valor no válido", Toast.LENGTH_SHORT).show()
                             break
                         }
                     }
